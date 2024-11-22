@@ -78,7 +78,6 @@ export const Overview: React.FC = () => {
                       <p className="text-sm text-gray-500">{restaurant.cuisine}</p>
                     </div>
                     <div className="flex items-center text-yellow-400">
-                      <Star className="w-4 h-4 fill-current" />
                       <span className="ml-1 text-sm text-gray-600">{restaurant.rating}</span>
                     </div>
                   </div>
