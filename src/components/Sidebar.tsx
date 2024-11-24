@@ -63,6 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) =>
           onClick={() => onViewChange('todos')}
         />
       </nav>
+
       
       <div className="absolute bottom-4 left-4 right-4">
         <NavItem

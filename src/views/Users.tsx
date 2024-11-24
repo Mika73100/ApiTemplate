@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import { Pencil, Trash2, Loader2 } from 'lucide-react';
 import { ErrorMessage } from '../components/ErrorMessage';
 import type { User } from '../types';
+import { GenericForm } from '../components/Form';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -12,6 +13,7 @@ export const Users: React.FC = () => {
     fetcher
   );
   const [loading, setLoading] = useState<number | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const handleDelete = async (userId: number) => {
     setLoading(userId);
@@ -27,6 +29,12 @@ export const Users: React.FC = () => {
     setLoading(null);
   };
 
+  const handleSubmit = (data: any) => {
+    console.log('New user:', data);
+    // Logique d'ajout de l'utilisateur
+    setShowForm(false);
+  };
+
   if (error) return <ErrorMessage message="Failed to load users" />;
   if (!users) return (
     <div className="flex justify-center items-center h-64">
@@ -37,8 +45,21 @@ export const Users: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Users</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Users</h1>
+        <button 
+          onClick={() => setShowForm(!showForm)}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          {showForm ? 'Cancel' : 'Add User'}
+        </button>
       </div>
+
+      <GenericForm
+        type="user"
+        show={showForm}
+        onSubmit={handleSubmit}
+        onCancel={() => setShowForm(false)}
+      />
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">

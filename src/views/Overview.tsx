@@ -5,6 +5,7 @@ import { DataCard } from '../components/DataCard';
 import { ErrorMessage } from '../components/ErrorMessage';
 import type { User, Restaurant, Todo } from '../types';
 
+
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const mockRestaurants: Restaurant[] = [
   { id: 1, name: "Le Petit Bistro", cuisine: "French", rating: 4.5, address: "123 Culinary Lane" },

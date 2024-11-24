@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import { Pencil, Trash2, Loader2, Star } from 'lucide-react';
 import { ErrorMessage } from '../components/ErrorMessage';
 import type { Restaurant } from '../types';
+import { GenericForm } from '../components/Form';
 
 // Simulated restaurant data since JSONPlaceholder doesn't have restaurants
 const mockRestaurants: Restaurant[] = [
@@ -21,6 +22,7 @@ export const Restaurants: React.FC = () => {
     fetcher
   );
   const [loading, setLoading] = useState<number | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const handleDelete = async (restaurantId: number) => {
     setLoading(restaurantId);
@@ -35,6 +37,12 @@ export const Restaurants: React.FC = () => {
     setLoading(null);
   };
 
+  const handleSubmit = (data: any) => {
+    console.log('New restaurant:', data);
+    // Logique d'ajout du restaurant
+    setShowForm(false);
+  };
+
   if (error) return <ErrorMessage message="Failed to load restaurants" />;
   if (!restaurants) return (
     <div className="flex justify-center items-center h-64">
@@ -45,11 +53,21 @@ export const Restaurants: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Restaurants</h1>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Add Restaurant
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Restaurants</h1>
+        <button 
+          onClick={() => setShowForm(!showForm)}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          {showForm ? 'Cancel' : 'Add Restaurant'}
         </button>
       </div>
+
+      <GenericForm
+        type="restaurant"
+        show={showForm}
+        onSubmit={handleSubmit}
+        onCancel={() => setShowForm(false)}
+      />
 
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
