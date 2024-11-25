@@ -2,6 +2,8 @@ export interface User {
   id: number;
   name: string;
   email: string;
+  phone: string;
+  address: string;
   company: {
     name: string;
   };
@@ -20,4 +22,13 @@ export interface Todo {
   title: string;
   completed: boolean;
   userId: number;
+}
+
+export interface Message {
+  id: number;
+  content: string;
+  created_at: string;
+  user_id: string;
+  conversation_id: string;
+  role: 'user' | 'assistant';
 }

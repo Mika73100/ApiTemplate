@@ -1,41 +1,63 @@
 import React from 'react';
-import useSWR from 'swr';
 import { Users, Utensils, CheckSquare } from 'lucide-react';
 import { DataCard } from '../components/DataCard';
 import { ErrorMessage } from '../components/ErrorMessage';
-import type { User, Restaurant, Todo } from '../types';
-
-
-const fetcher = (url: string) => fetch(url).then(res => res.json());
-const mockRestaurants: Restaurant[] = [
-  { id: 1, name: "Le Petit Bistro", cuisine: "French", rating: 4.5, address: "123 Culinary Lane" },
-  { id: 2, name: "Sushi Master", cuisine: "Japanese", rating: 4.8, address: "456 Foodie Street" },
-  { id: 3, name: "La Pizzeria", cuisine: "Italian", rating: 4.3, address: "789 Gourmet Avenue" },
-  { id: 4, name: "Taj Mahal", cuisine: "Indian", rating: 4.6, address: "321 Spice Road" },
-  { id: 5, name: "Dragon Wok", cuisine: "Chinese", rating: 4.4, address: "654 Asian Boulevard" },
-];
+import { supabase } from '../Config/Supabase';
+import type { User, Restaurant } from '../types';
+import { useEffect, useState } from 'react';
 
 export const Overview: React.FC = () => {
-  const { data: users, error: usersError } = useSWR<User[]>(
-    'https://jsonplaceholder.typicode.com/users',
-    fetcher
-  );
-  
-  const { data: restaurants } = useSWR<Restaurant[]>(
-    'restaurants',
-    () => Promise.resolve(mockRestaurants)
-  );
-  
-  const { data: todos, error: todosError } = useSWR<Todo[]>(
-    'https://jsonplaceholder.typicode.com/todos',
-    fetcher
-  );
+  const [users, setUsers] = useState<User[] | null>(null);
+  const [restaurants, setRestaurants] = useState<Restaurant[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  if (usersError || todosError) {
-    return <ErrorMessage message="Failed to load dashboard data" />;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Récupérer les utilisateurs
+        const { data: usersData, error: usersError } = await supabase
+          .from('users')
+          .select('*');
+        
+        if (usersError) {
+          console.error('Users error:', usersError);
+          throw usersError;
+        }
+        setUsers(usersData);
+
+        // Récupérer les restaurants
+        const { data: restaurantsData, error: restaurantsError } = await supabase
+          .from('restaurants')
+          .select('*')
+          .order('rating', { ascending: false });
+        
+        if (restaurantsError) {
+          console.error('Restaurants error:', restaurantsError);
+          throw restaurantsError;
+        }
+        setRestaurants(restaurantsData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('Failed to load dashboard data');
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Ajout d'un état de chargement
+  if (!users || !restaurants) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
   }
 
-  const completedTodos = todos?.filter(todo => todo.completed).length || 0;
+  if (error) {
+    return <ErrorMessage message={error} />;
+  }
 
   return (
     <div className="ml-10 space-y-6">
@@ -55,14 +77,14 @@ export const Overview: React.FC = () => {
           loading={!restaurants}
         />
         <DataCard
-          title="Completed Todos"
-          value={completedTodos}
+          title="Active Restaurants"
+          value={restaurants?.filter(r => r.rating >= 4).length || 0}
           icon={<CheckSquare size={24} />}
-          loading={!todos}
+          loading={!restaurants}
         />
       </div>
 
-      {restaurants && (
+      {restaurants && restaurants.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900">Top Rated Restaurants</h2>

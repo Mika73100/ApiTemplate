@@ -1,49 +1,75 @@
-import React, { useState } from 'react';
-import useSWR from 'swr';
+import React, { useState, useEffect } from 'react';
 import { Pencil, Trash2, Loader2, Star } from 'lucide-react';
 import { ErrorMessage } from '../components/ErrorMessage';
-import type { Restaurant } from '../types';
-import { GenericForm } from '../components/Form';
+import { Form } from '../components/Form';
+import { supabase } from '../Config/Supabase';
+import { Restaurant } from '../types';
 
-// Simulated restaurant data since JSONPlaceholder doesn't have restaurants
-const mockRestaurants: Restaurant[] = [
-  { id: 1, name: "Le Petit Bistro", cuisine: "French", rating: 4.5, address: "123 Culinary Lane" },
-  { id: 2, name: "Sushi Master", cuisine: "Japanese", rating: 4.8, address: "456 Foodie Street" },
-  { id: 3, name: "La Pizzeria", cuisine: "Italian", rating: 4.3, address: "789 Gourmet Avenue" },
-  { id: 4, name: "Taj Mahal", cuisine: "Indian", rating: 4.6, address: "321 Spice Road" },
-  { id: 5, name: "Dragon Wok", cuisine: "Chinese", rating: 4.4, address: "654 Asian Boulevard" },
-];
-
-const fetcher = () => Promise.resolve(mockRestaurants);
 
 export const Restaurants: React.FC = () => {
-  const { data: restaurants, error, mutate } = useSWR<Restaurant[]>(
-    'restaurants',
-    fetcher
-  );
+  const [restaurants, setRestaurants] = useState<Restaurant[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
+
+  // Charger les restaurants
+  const fetchRestaurants = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('restaurants')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) throw error;
+      setRestaurants(data);
+    } catch (error) {
+      console.error('Error fetching restaurants:', error);
+      setError('Failed to load restaurants');
+    }
+  };
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
   const handleDelete = async (restaurantId: number) => {
     setLoading(restaurantId);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
-      // Optimistically remove the restaurant from the list
-      mutate(restaurants?.filter(restaurant => restaurant.id !== restaurantId), false);
+      const { error } = await supabase
+        .from('restaurants')
+        .delete()
+        .eq('id', restaurantId);
+
+      if (error) throw error;
+      
+      // Mettre à jour la liste localement
+      setRestaurants(restaurants?.filter(restaurant => restaurant.id !== restaurantId) || null);
     } catch (error) {
       console.error('Failed to delete restaurant:', error);
     }
     setLoading(null);
   };
 
-  const handleSubmit = (data: any) => {
-    console.log('New restaurant:', data);
-    // Logique d'ajout du restaurant
-    setShowForm(false);
+  const handleSubmit = async (data: any) => {
+    try {
+      const { data: newRestaurant, error } = await supabase
+        .from('restaurants')
+        .insert([data])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Ajouter le nouveau restaurant à la liste
+      setRestaurants(restaurants ? [...restaurants, newRestaurant] : [newRestaurant]);
+      setShowForm(false);
+    } catch (error) {
+      console.error('Failed to add restaurant:', error);
+      alert('Failed to add restaurant');
+    }
   };
 
-  if (error) return <ErrorMessage message="Failed to load restaurants" />;
+  if (error) return <ErrorMessage message={error} />;
   if (!restaurants) return (
     <div className="flex justify-center items-center h-64">
       <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
@@ -62,7 +88,7 @@ export const Restaurants: React.FC = () => {
         </button>
       </div>
 
-      <GenericForm
+      <Form
         type="restaurant"
         show={showForm}
         onSubmit={handleSubmit}

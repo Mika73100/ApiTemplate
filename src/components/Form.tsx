@@ -36,23 +36,33 @@ const form: { [key: string]: Form } = {
   }
 };
 
-interface GenericFormProps {
+interface FormProps {
   type: 'restaurant' | 'user';
   onSubmit: (data: any) => void;
   onCancel: () => void;
   show: boolean;
 }
 
-export const GenericForm: React.FC<GenericFormProps> = ({ type, onSubmit, onCancel, show }) => {
+export const Form: React.FC<FormProps> = ({ type, onSubmit, onCancel, show }) => {
   const config = form[type];
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!show) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
-    setFormData({});
+    setIsLoading(true);
+    
+    try {
+      await onSubmit(formData);
+      setFormData({});
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout:', error);
+      alert('Une erreur est survenue lors de l\'ajout');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (field: string, value: string | number) => {
@@ -106,10 +116,11 @@ export const GenericForm: React.FC<GenericFormProps> = ({ type, onSubmit, onCanc
           </button>
           <button
             type="submit"
+            disabled={isLoading}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg 
-                     hover:bg-blue-700 transition-colors"
+                     hover:bg-blue-700 transition-colors disabled:opacity-50"
           >
-            Save
+            {isLoading ? 'Enregistrement...' : 'Enregistrer'}
           </button>
         </div>
       </form>

@@ -1,41 +1,75 @@
-import React, { useState } from 'react';
-import useSWR from 'swr';
+import React, { useState, useEffect } from 'react';
 import { Pencil, Trash2, Loader2 } from 'lucide-react';
 import { ErrorMessage } from '../components/ErrorMessage';
 import type { User } from '../types';
-import { GenericForm } from '../components/Form';
-
-const fetcher = (url: string) => fetch(url).then(res => res.json());
+import { Form } from '../components/Form';
+import { supabase } from '../Config/Supabase';
 
 export const Users: React.FC = () => {
-  const { data: users, error, mutate } = useSWR<User[]>(
-    'https://jsonplaceholder.typicode.com/users',
-    fetcher
-  );
+  const [users, setUsers] = useState<User[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
+
+  // Charger les utilisateurs
+  const fetchUsers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error) throw error;
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setError('Failed to load users');
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const handleDelete = async (userId: number) => {
     setLoading(userId);
     try {
-      await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`, {
-        method: 'DELETE',
-      });
-      // Optimistically remove the user from the list
-      mutate(users?.filter(user => user.id !== userId), false);
+      const { error } = await supabase
+        .from('users')
+        .delete()
+        .eq('id', userId);
+
+      if (error) throw error;
+      
+      // Mettre à jour la liste localement
+      setUsers(users?.filter(user => user.id !== userId) || null);
     } catch (error) {
       console.error('Failed to delete user:', error);
     }
     setLoading(null);
   };
 
-  const handleSubmit = (data: any) => {
-    console.log('New user:', data);
-    // Logique d'ajout de l'utilisateur
-    setShowForm(false);
+  const handleSubmit = async (data: any) => {
+    try {
+      // Insérer dans la base de données
+      const { data: newUser, error } = await supabase
+        .from('users')
+        .insert([data])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Mettre à jour l'état local
+      setUsers(users ? [...users, newUser] : [newUser]);
+      setShowForm(false);
+    } catch (error) {
+      console.error('Failed to add user:', error);
+      alert('Failed to add user');
+    }
   };
 
-  if (error) return <ErrorMessage message="Failed to load users" />;
+  if (error) return <ErrorMessage message={error} />;
   if (!users) return (
     <div className="flex justify-center items-center h-64">
       <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
@@ -54,7 +88,7 @@ export const Users: React.FC = () => {
         </button>
       </div>
 
-      <GenericForm
+      <Form
         type="user"
         show={showForm}
         onSubmit={handleSubmit}
@@ -68,7 +102,8 @@ export const Users: React.FC = () => {
               <tr className="bg-gray-50 border-b border-gray-200">
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -82,7 +117,10 @@ export const Users: React.FC = () => {
                     {user.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-gray-500">
-                    {user.company.name}
+                    {user.phone || '-'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                    {user.address || '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
                     <div className="flex justify-end gap-3">
