@@ -5,6 +5,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { supabase } from '../Config/Supabase';
 import type { User, Restaurant } from '../types';
 import { useEffect, useState } from 'react';
+import { Star } from 'lucide-react';
 
 export const Overview: React.FC = () => {
   const [users, setUsers] = useState<User[] | null>(null);
@@ -101,7 +102,10 @@ export const Overview: React.FC = () => {
                       <p className="text-sm text-gray-500">{restaurant.cuisine}</p>
                     </div>
                     <div className="flex items-center text-yellow-400">
-                      <span className="ml-1 text-sm text-gray-600">{restaurant.rating}</span>
+                      <span className="text-sm text-gray-600 flex items-center gap-1">
+                        {restaurant.rating}
+                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                      </span>
                     </div>
                   </div>
                 </div>
