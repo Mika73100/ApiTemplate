@@ -51,7 +51,7 @@ export const Restaurants: React.FC = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="ml-10 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Restaurants</h1>
         <button 
