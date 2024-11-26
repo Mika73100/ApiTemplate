@@ -91,18 +91,14 @@ export const Overview: React.FC = () => {
 
       {/* Restaurants Accordion */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-        <button
-          className="w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
-          onClick={() => setIsRestaurantsOpen(!isRestaurantsOpen)}
-        >
+        <div className="w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50">
           <div className="flex items-center gap-3">
             <Utensils className="w-5 h-5 text-gray-500" />
             <h2 className="font-semibold text-gray-900">Restaurants List</h2>
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 setRestaurantSort(prev => ({ field: 'name', ascending: prev.field === 'name' ? !prev.ascending : true }));
               }}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2
@@ -130,14 +126,17 @@ export const Overview: React.FC = () => {
                 restaurantSort.ascending ? <ArrowUpDown size={16} /> : <ArrowDownUp size={16} />
               )}
             </button>
-            <div className="bg-gray-100 p-1 rounded-full ml-2">
+            <button 
+              onClick={() => setIsRestaurantsOpen(!isRestaurantsOpen)}
+              className="bg-gray-100 p-1 rounded-full ml-2 hover:bg-gray-200"
+            >
               {isRestaurantsOpen ? 
                 <ChevronUp className="w-5 h-5 text-gray-600" /> : 
                 <ChevronDown className="w-5 h-5 text-gray-600" />
               }
-            </div>
+            </button>
           </div>
-        </button>
+        </div>
         {isRestaurantsOpen && (
           <div className="divide-y divide-gray-200">
             {restaurants
@@ -170,10 +169,7 @@ export const Overview: React.FC = () => {
 
       {/* Users Accordion */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-        <button
-          className="w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
-          onClick={() => setIsUsersOpen(!isUsersOpen)}
-        >
+        <div className="w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50">
           <div className="flex items-center gap-3">
             <Users className="w-5 h-5 text-gray-500" />
             <h2 className="font-semibold text-gray-900">Users List</h2>
@@ -209,14 +205,17 @@ export const Overview: React.FC = () => {
                 userSort.ascending ? <ArrowUpDown size={16} /> : <ArrowDownUp size={16} />
               )}
             </button>
-            <div className="bg-gray-100 p-1 rounded-full ml-2">
+            <button 
+              onClick={() => setIsUsersOpen(!isUsersOpen)}
+              className="bg-gray-100 p-1 rounded-full ml-2 hover:bg-gray-200"
+            >
               {isUsersOpen ? 
                 <ChevronUp className="w-5 h-5 text-gray-600" /> : 
                 <ChevronDown className="w-5 h-5 text-gray-600" />
               }
-            </div>
+            </button>
           </div>
-        </button>
+        </div>
         {isUsersOpen && (
           <div className="divide-y divide-gray-200">
             {users
