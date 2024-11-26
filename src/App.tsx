@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useAuth } from './contexts/AuthContext';
-import { Login } from './views/Auth/Login';
 import { Sidebar } from './components/Sidebar';
 import { Overview } from './views/Overview';
 import { Users } from './views/Users';
 import { Restaurants } from './views/Restaurants';
 import { Todos } from './views/Todos';
 import { Settings } from './views/Settings';
+
+import { useAuth } from './contexts/AuthContext';
+import { Login } from './views/Auth/Login';
 import { Register } from './views/Auth/Register';
 
 function App() {
   const [activeView, setActiveView] = useState('overview');
-  const [showLogin, setShowLogin] = useState(true);
+ const [showLogin, setShowLogin] = useState(true);
   const { isAuthenticated } = useAuth();
 
   // Si non authentifié, afficher soit login soit register
@@ -31,7 +32,7 @@ function App() {
 
   // Si authentifié, afficher l'interface principale
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen">
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
       <main className="pl-64 p-8">
         {activeView === 'overview' && <Overview />}

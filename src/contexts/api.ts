@@ -1,9 +1,11 @@
 import type { Restaurant } from '../types';
 
 // Utiliser l'URL de Supabase au lieu du localhost
-const API_BASE_URL = import.meta.env.VITE_SUPABASE_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
 
 export const restaurantApi = {
+  
 
   //Get all restaurants
   getAll: async (): Promise<Restaurant[]> => {
@@ -121,4 +123,47 @@ export const restaurantApi = {
       throw new Error('Impossible de supprimer le restaurant');
     }
   },
+
+  // Ajoutez cette route de test
+  test: async (): Promise<any> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/test`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Impossible de tester le serveur');
+    }
+  },
+
+  // Ajoutez une méthode pour vérifier la connexion
+  checkConnection: async (): Promise<boolean> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/health?select=status`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+      });
+
+      return response.ok;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Impossible de vérifier la connexion');
+    }
+  }
 }; 
