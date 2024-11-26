@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { LogOut } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Settings: React.FC = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+    }
+  };
+
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('theme') as 'light' | 'dark' || 'light';
@@ -54,6 +66,16 @@ export const Settings: React.FC = () => {
           </label>
         </div>
       
+      <div className="mt-8 p-4 bg-white rounded-lg shadow">
+        <h2 className="text-lg font-semibold mb-4">Session</h2>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+        >
+          <LogOut size={20} />
+          <span>Se déconnecter</span>
+        </button>
+      </div>
     </div>
   );
 };
