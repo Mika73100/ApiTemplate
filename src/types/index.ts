@@ -4,6 +4,7 @@ export interface User {
   email: string;
   phone: string;
   address: string;
+  created_at: string;
   company: {
     name: string;
   };

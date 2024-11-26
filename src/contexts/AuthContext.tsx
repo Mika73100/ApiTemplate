@@ -33,8 +33,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        setIsAuthenticated(true);
+        
+        // Rediriger vers la page d'accueil après la connexion
+        window.location.href = '/'; // ou utilisez la navigation de votre choix
+      }
+    } catch (error) {
+      console.error('Erreur de connexion:', error);
+      throw error;
+    }
   };
 
   const register = async (email: string, password: string) => {
@@ -43,8 +59,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.error('Erreur de déconnexion:', error);
+      throw error;
+    }
   };
 
   return (
