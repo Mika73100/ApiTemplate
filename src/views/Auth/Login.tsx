@@ -3,7 +3,10 @@ import { Loader2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 
-export const Login: React.FC<{ onSwitchToRegister: () => void }> = ({ onSwitchToRegister }) => {
+export const Login: React.FC<{ 
+  onSwitchToRegister: () => void;
+  onLoginSuccess: () => void;
+}> = ({ onSwitchToRegister, onLoginSuccess }) => {
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,6 +23,7 @@ export const Login: React.FC<{ onSwitchToRegister: () => void }> = ({ onSwitchTo
 
     try {
       await login(formData.email, formData.password);
+      onLoginSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de connexion');
     } finally {

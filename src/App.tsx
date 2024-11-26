@@ -21,7 +21,10 @@ function App() {
       <div className="min-h-screen bg-gray-10 flex items-center justify-center">
         <div className="w-full max-w-md">
           {showLogin ? (
-            <Login onSwitchToRegister={() => setShowLogin(false)} />
+            <Login 
+              onSwitchToRegister={() => setShowLogin(false)} 
+              onLoginSuccess={() => setActiveView('overview')} 
+            />
           ) : (
             <Register onSwitchToLogin={() => setShowLogin(true)} />
           )}
