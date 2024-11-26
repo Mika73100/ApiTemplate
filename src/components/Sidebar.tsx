@@ -31,8 +31,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) =>
   return (
     <div className="w-64 h-screen bg-white border-r border-gray-200 p-4 fixed left-0 top-0">
       <div className="flex items-center gap-2 px-4 py-3">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/img/54.png" alt="Logo"/>
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <span className="text-white font-bold">D</span>
         </div>
         <span className="font-bold text-xl">Dashboard</span>
       </div>
