@@ -25,3 +25,8 @@ dist-ssr
 
 # GitHub
 .git
+
+# Push
+.README
+.env
+
