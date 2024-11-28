@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+
+//Social Login
 import { GoogleSignIn } from './GoogleSignIn';
+import { FacebookSignIn } from './FacebookSignIn';
+import { AppleSignIn } from './AppleSignIn';
 
 
 export const Login: React.FC<{ 
@@ -108,6 +112,8 @@ export const Login: React.FC<{
       </div>
 
       <GoogleSignIn />
+      <FacebookSignIn />
+      <AppleSignIn />
       
       <div className="text-sm text-center mt-4">
         <p className="text-gray-600">
