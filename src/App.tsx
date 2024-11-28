@@ -5,6 +5,8 @@ import { Users } from './views/Users';
 import { Restaurants } from './views/Restaurants';
 import { Todos } from './views/Todos';
 import { Settings } from './views/Settings';
+import { ToastProvider } from './contexts/ToastContext';
+
 
 import { useAuth } from './contexts/AuthContext';
 import { Login } from './views/Auth/Login';
@@ -35,16 +37,18 @@ function App() {
 
   // Si authentifié, afficher l'interface principale
   return (
-    <div className="min-h-screen">
-      <Sidebar activeView={activeView} onViewChange={setActiveView} />
-      <main className="pl-64 p-8">
-        {activeView === 'overview' && <Overview />}
-        {activeView === 'users' && <Users />}
-        {activeView === 'restaurants' && <Restaurants />}
-        {activeView === 'todos' && <Todos />}
-        {activeView === 'settings' && <Settings />}
-      </main>
-    </div>
+    <ToastProvider>
+      <div className="min-h-screen">
+        <Sidebar activeView={activeView} onViewChange={setActiveView} />
+        <main className="pl-64 p-8">
+          {activeView === 'overview' && <Overview />}
+          {activeView === 'users' && <Users />}
+          {activeView === 'restaurants' && <Restaurants />}
+          {activeView === 'todos' && <Todos />}
+          {activeView === 'settings' && <Settings />}
+        </main>
+      </div>
+    </ToastProvider>
   );
 }
 

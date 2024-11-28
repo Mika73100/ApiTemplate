@@ -4,12 +4,14 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import type { User } from '../types';
 import { Form } from '../components/Form';
 import { supabase } from '../Config/Supabase';
+import { useToast } from '../contexts/ToastContext';
 
 export const Users: React.FC = () => {
   const [users, setUsers] = useState<User[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const { showToast } = useToast();
 
   // Charger les utilisateurs
   const fetchUsers = async () => {
@@ -43,8 +45,10 @@ export const Users: React.FC = () => {
       
       // Mettre à jour la liste localement
       setUsers(users?.filter(user => user.id !== userId) || null);
+      showToast('Utilisateur supprimé avec succès', 'success');
     } catch (error) {
       console.error('Failed to delete user:', error);
+      showToast('Erreur lors de la suppression de l\'utilisateur', 'error');
     }
     setLoading(null);
   };
@@ -63,9 +67,10 @@ export const Users: React.FC = () => {
       // Mettre à jour l'état local
       setUsers(users ? [...users, newUser] : [newUser]);
       setShowForm(false);
+      showToast('Utilisateur ajouté avec succès', 'success');
     } catch (error) {
       console.error('Failed to add user:', error);
-      alert('Failed to add user');
+      showToast('Erreur lors de l\'ajout de l\'utilisateur', 'error');
     }
   };
 

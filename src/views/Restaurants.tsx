@@ -4,6 +4,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { Form } from '../components/Form';
 import { supabase } from '../Config/Supabase';
 import { Restaurant } from '../types';
+import { useToast } from '../contexts/ToastContext';
 
 
 export const Restaurants: React.FC = () => {
@@ -11,6 +12,7 @@ export const Restaurants: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const { showToast } = useToast();
 
   // Charger les restaurants
   const fetchRestaurants = async () => {
@@ -42,10 +44,11 @@ export const Restaurants: React.FC = () => {
 
       if (error) throw error;
       
-      // Mettre à jour la liste localement
       setRestaurants(restaurants?.filter(restaurant => restaurant.id !== restaurantId) || null);
+      showToast('Restaurant supprimé avec succès', 'success');
     } catch (error) {
       console.error('Failed to delete restaurant:', error);
+      showToast('Erreur lors de la suppression du restaurant', 'error');
     }
     setLoading(null);
   };
@@ -60,12 +63,12 @@ export const Restaurants: React.FC = () => {
 
       if (error) throw error;
 
-      // Ajouter le nouveau restaurant à la liste
       setRestaurants(restaurants ? [...restaurants, newRestaurant] : [newRestaurant]);
       setShowForm(false);
+      showToast('Restaurant ajouté avec succès', 'success');
     } catch (error) {
       console.error('Failed to add restaurant:', error);
-      alert('Failed to add restaurant');
+      showToast('Erreur lors de l\'ajout du restaurant', 'error');
     }
   };
 
