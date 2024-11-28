@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Trash2, Loader2 } from 'lucide-react';
+import { Pencil, Trash2, Loader2, Plus } from 'lucide-react';
 import { ErrorMessage } from '../components/ErrorMessage';
 import type { User } from '../types';
 import { Form } from '../components/Form';
@@ -82,9 +82,13 @@ export const Users: React.FC = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Users</h1>
         <button 
           onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
         >
-          {showForm ? 'Cancel' : 'Add User'}
+          {showForm ? 'Cancel' : (
+            <>
+              <Plus className="w-5 h-5" /> User
+            </>
+          )}
         </button>
       </div>
 

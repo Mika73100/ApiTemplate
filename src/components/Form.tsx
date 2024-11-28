@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { UserIcon, StoreIcon } from 'lucide-react';
 
 interface Field {
   name: string;
@@ -11,13 +12,18 @@ interface Field {
 }
 
 interface Form {
-  title: string;
+  title: string | React.ReactNode;
   fields: Field[];
 }
 
 const form: { [key: string]: Form } = {
   restaurant: {
-    title: 'Add Restaurant',
+    title: (
+      <div className="flex items-center gap-2">
+        <StoreIcon className="w-6 h-6" />
+        <span>Restaurant</span>
+      </div>
+    ),
     fields: [
       { name: 'name', label: 'Restaurant Name', type: 'text', required: true },
       { name: 'cuisine', label: 'Cuisine Type', type: 'text', required: true },
@@ -26,7 +32,12 @@ const form: { [key: string]: Form } = {
     ]
   },
   user: {
-    title: 'Add User',
+    title: (
+      <div className="flex items-center gap-2">
+        <UserIcon className="w-6 h-6" />
+        <span>User</span>
+      </div>
+    ),
     fields: [
       { name: 'name', label: 'Full Name', type: 'text', required: true },
       { name: 'email', label: 'Email', type: 'email', required: true },
