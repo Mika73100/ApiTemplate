@@ -93,7 +93,7 @@ export const Register: React.FC<{ onSwitchToLogin: () => void }> = ({ onSwitchTo
               type="email"
               required
               className="appearance-none rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Adresse email"
+              placeholder="Email address"
               value={formData.email}
               onChange={handleChange}
             />
@@ -105,7 +105,7 @@ export const Register: React.FC<{ onSwitchToLogin: () => void }> = ({ onSwitchTo
               type="password"
               required
               className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Mot de passe"
+              placeholder="Password"
               value={formData.password}
               onChange={handleChange}
             />
@@ -117,7 +117,7 @@ export const Register: React.FC<{ onSwitchToLogin: () => void }> = ({ onSwitchTo
               type="password"
               required
               className="appearance-none rounded-b-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Confirmer le mot de passe"
+              placeholder="Confirm password"
               value={formData.confirmPassword}
               onChange={handleChange}
             />
@@ -133,7 +133,7 @@ export const Register: React.FC<{ onSwitchToLogin: () => void }> = ({ onSwitchTo
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              'S\'inscrire'
+              'Inscription'
             )}
           </button>
         </div>
