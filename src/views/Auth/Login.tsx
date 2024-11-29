@@ -44,16 +44,16 @@ export const Login: React.FC<{
   };
 
   return (
-    <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
+    <div className="max-w-sm w-full space-y-6 bg-white p-6 rounded-xl shadow-lg">
       <div>
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="text-center text-2xl font-extrabold text-gray-900">
           Connexion
         </h2>
       </div>
       
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+      <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-xs">
             {error}
           </div>
         )}
@@ -66,7 +66,7 @@ export const Login: React.FC<{
               name="email"
               type="email"
               required
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-none relative block w-full px-2 py-1.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-xs"
               placeholder="Adresse email"
               value={formData.email}
               onChange={handleChange}
@@ -79,7 +79,7 @@ export const Login: React.FC<{
               name="password"
               type="password"
               required
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-none relative block w-full px-2 py-1.5 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-xs"
               placeholder="Mot de passe"
               value={formData.password}
               onChange={handleChange}
@@ -91,10 +91,10 @@ export const Login: React.FC<{
           <button
             type="submit"
             disabled={loading}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400"
+            className="group relative w-full flex justify-center py-1.5 px-3 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400"
           >
             {loading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
               'Se connecter'
             )}
@@ -102,11 +102,11 @@ export const Login: React.FC<{
         </div>
       </form>
 
-      <div className="relative my-6">
+      <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300"></div>
         </div>
-        <div className="relative flex justify-center text-sm">
+        <div className="relative flex justify-center text-xs">
           <span className="px-2 bg-white text-gray-500">Ou</span>
         </div>
       </div>
@@ -115,7 +115,7 @@ export const Login: React.FC<{
       <FacebookSignIn />
       <AppleSignIn />
       
-      <div className="text-sm text-center mt-4">
+      <div className="text-xs text-center mt-3">
         <p className="text-gray-600">
           Besoin d'un compte ?{' '}
           <button
