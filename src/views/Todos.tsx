@@ -51,7 +51,8 @@ export const Todos: React.FC = () => {
                   <h3 className="font-semibold text-gray-900">{restaurant.name}</h3>
                   <p className="text-gray-600">{restaurant.cuisine}</p>
                 </div>
-                <div className="flex items-center gap-4">
+
+                <div className="flex items-center gap-3 justify-center">
                   <span className="text-gray-500 text-sm text-center">
                     {restaurant.address}
                   </span>
@@ -60,6 +61,7 @@ export const Todos: React.FC = () => {
                   </span>
                   <span className="text-yellow-500 mr-1">★</span>
                 </div>
+                
               </li>
             ))}
           </ul>
