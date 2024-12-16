@@ -4,7 +4,7 @@
 
 
 
-
+#LANCER LE PROJET
 1. npm i nodemodule     (install les dependances)
 2. npm run dev   (lance le projet)
 3. 
@@ -13,7 +13,6 @@
 
 
 #POUR PRISMA
-
 1. npm install prisma -D
 2. npx prisma init
 3. npx prisma migrate dev
