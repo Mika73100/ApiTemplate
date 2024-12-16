@@ -4,15 +4,15 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { Form } from '../components/Form';
 import { supabase } from '../Config/Supabase';
 import { Restaurant } from '../types';
-import { useToast } from '../contexts/ToastContext';
-
+import { Toast, ToastType } from '../components/Toast';
 
 export const Restaurants: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const { showToast } = useToast();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<ToastType>('success');
 
   // Charger les restaurants
   const fetchRestaurants = async () => {
@@ -43,12 +43,14 @@ export const Restaurants: React.FC = () => {
         .eq('id', restaurantId);
 
       if (error) throw error;
-      
+
       setRestaurants(restaurants?.filter(restaurant => restaurant.id !== restaurantId) || null);
-      showToast('Restaurant supprimé avec succès', 'success');
+      setToastMessage('Restaurant supprimé avec succès');
+      setToastType('success');
     } catch (error) {
       console.error('Failed to delete restaurant:', error);
-      showToast('Erreur lors de la suppression du restaurant', 'error');
+      setToastMessage('Erreur lors de la suppression du restaurant');
+      setToastType('error');
     }
     setLoading(null);
   };
@@ -65,10 +67,12 @@ export const Restaurants: React.FC = () => {
 
       setRestaurants(restaurants ? [...restaurants, newRestaurant] : [newRestaurant]);
       setShowForm(false);
-      showToast('Restaurant ajouté avec succès', 'success');
+      setToastMessage('Restaurant ajouté avec succès');
+      setToastType('success');
     } catch (error) {
       console.error('Failed to add restaurant:', error);
-      showToast('Erreur lors de l\'ajout du restaurant', 'error');
+      setToastMessage('Erreur lors de l\'ajout du restaurant');
+      setToastType('error');
     }
   };
 
@@ -81,6 +85,9 @@ export const Restaurants: React.FC = () => {
 
   return (
     <div className="ml-10 space-y-6">
+      {toastMessage && (
+        <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage(null)} />
+      )}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Restaurants</h1>
         <button 

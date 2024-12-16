@@ -4,14 +4,15 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import type { User } from '../types';
 import { Form } from '../components/Form';
 import { supabase } from '../Config/Supabase';
-import { useToast } from '../contexts/ToastContext';
+import { Toast, ToastType } from '../components/Toast';
 
 export const Users: React.FC = () => {
   const [users, setUsers] = useState<User[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const { showToast } = useToast();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<ToastType>('success');
 
   // Charger les utilisateurs
   const fetchUsers = async () => {
@@ -42,13 +43,15 @@ export const Users: React.FC = () => {
         .eq('id', userId);
 
       if (error) throw error;
-      
+
       // Mettre à jour la liste localement
       setUsers(users?.filter(user => user.id !== userId) || null);
-      showToast('Utilisateur supprimé avec succès', 'success');
+      setToastMessage('Utilisateur supprimé avec succès');
+      setToastType('success');
     } catch (error) {
       console.error('Failed to delete user:', error);
-      showToast('Erreur lors de la suppression de l\'utilisateur', 'error');
+      setToastMessage('Erreur lors de la suppression de l\'utilisateur');
+      setToastType('error');
     }
     setLoading(null);
   };
@@ -67,10 +70,12 @@ export const Users: React.FC = () => {
       // Mettre à jour l'état local
       setUsers(users ? [...users, newUser] : [newUser]);
       setShowForm(false);
-      showToast('Utilisateur ajouté avec succès', 'success');
+      setToastMessage('Utilisateur ajouté avec succès');
+      setToastType('success');
     } catch (error) {
       console.error('Failed to add user:', error);
-      showToast('Erreur lors de l\'ajout de l\'utilisateur', 'error');
+      setToastMessage('Erreur lors de l\'ajout de l\'utilisateur');
+      setToastType('error');
     }
   };
 
@@ -83,6 +88,9 @@ export const Users: React.FC = () => {
 
   return (
     <div className="ml-10 space-y-6">
+      {toastMessage && (
+        <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage(null)} />
+      )}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Users</h1>
         <button 
