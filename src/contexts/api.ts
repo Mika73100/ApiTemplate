@@ -1,4 +1,4 @@
-import type { Restaurant } from '../types';
+import type { Restaurant, User } from '../types';
 
 // Utiliser l'URL de Supabase au lieu du localhost
 const API_BASE_URL = import.meta.env.VITE_SUPABASE_URL;
@@ -6,6 +6,8 @@ const API_BASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 export const restaurantApi = {
   
+  
+  ////////////////////////////RESTAURANT////////////////////////////////////
 
   //Get all restaurants
   getAll: async (): Promise<Restaurant[]> => {
@@ -124,6 +126,8 @@ export const restaurantApi = {
     }
   },
 
+  ////////////////////////////OUTILS////////////////////////////////////
+
   // Ajoutez cette route de test
   test: async (): Promise<any> => {
     try {
@@ -165,5 +169,123 @@ export const restaurantApi = {
       console.error('API Error:', error);
       throw new Error('Impossible de vérifier la connexion');
     }
-  }
+  },
+
+
+  ///////////////////////////USERS////////////////////////////////////
+
+  // Méthodes pour User
+  //Get all users
+  getAllUsers: async (): Promise<User[]> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/users`, {
+        headers: {
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Impossible de récupérer les utilisateurs');
+    }
+  },
+
+  //Get a user by id
+  getUserById: async (id: number): Promise<User> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/users?id=eq.${id}`, {
+        headers: {
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data[0];
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Utilisateur non trouvé');
+    }
+  },
+
+  //Create a user
+  createUser: async (user: Omit<User, 'id'>): Promise<User> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Impossible de créer l\'utilisateur');
+    }
+  },
+
+  //Update a user
+  updateUser: async (id: number, user: Partial<User>): Promise<User> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/users?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Impossible de mettre à jour l\'utilisateur');
+    }
+  },
+
+  //Delete a user
+  deleteUser: async (id: number): Promise<void> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/rest/v1/users?id=eq.${id}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY || '',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('API Error:', error);
+      throw new Error('Impossible de supprimer l\'utilisateur');
+    }
+  },
 }; 

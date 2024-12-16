@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { restaurantApi } from '../contexts/api';
-import type { Restaurant } from '../types';
+import type { Restaurant, User } from '../types';
 
 export const Todos: React.FC = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +22,20 @@ export const Todos: React.FC = () => {
       }
     };
 
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await restaurantApi.getAllUsers();
+        setUsers(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Error loading users');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchRestaurants();
+    fetchUsers();
   }, []);
 
   // Composant pour le loader
@@ -31,10 +45,9 @@ export const Todos: React.FC = () => {
     </div>
   );
 
-
   // Composant pour la liste des restaurants
   const RestaurantList = ({ restaurants }: { restaurants: Restaurant[] }) => (
-    <div className="p-6">
+    <div className="p-6">                                                           
       <h1 className="text-2xl font-bold mb-6">Restaurants</h1>
       
       <div className="bg-white rounded-xl border border-gray-200 p-4">
@@ -70,6 +83,29 @@ export const Todos: React.FC = () => {
     </div>
   );
 
+  // Composant pour la liste des utilisateurs
+  const UserList = ({ users }: { users: User[] }) => (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Utilisateurs</h1>
+      <div className="bg-white rounded-xl border border-gray-200 p-4">
+        {users.length === 0 ? (
+          <p className="text-gray-500 text-center py-4">Aucun utilisateur trouvé</p>
+        ) : (
+          <ul className="space-y-4">
+            {users.map((user) => (
+              <li key={user.id} className="flex justify-between items-center p-4 hover:bg-gray-50 rounded-lg transition-colors">
+                <div>
+                  <h3 className="font-semibold text-gray-900">{user.name}</h3>
+                  <p className="text-gray-600">{user.email}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -78,5 +114,10 @@ export const Todos: React.FC = () => {
     console.error('Error:', error);
   }
 
-  return <RestaurantList restaurants={restaurants} />;
+  return (
+    <>
+      <RestaurantList restaurants={restaurants} />
+      <UserList users={users} />
+    </>
+  );
 };
