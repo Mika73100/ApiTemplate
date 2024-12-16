@@ -27,6 +27,6 @@ dist-ssr
 .git
 
 # Push
-.README
-.env
+# .README
+# .env
 
