@@ -57,7 +57,7 @@ export const Register: React.FC<{ onSwitchToLogin: () => void }> = ({ onSwitchTo
       }
     } catch (err) {
       console.error('Erreur d\'inscription:', err);
-      setError(err instanceof Error ? err.message : 'Erreur lors de l\'inscription');
+      setError(err instanceof Error ? err.message : "Confirmer l'email de votre compte");
     } finally {
       setLoading(false);
     }
