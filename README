@@ -1,18 +1,127 @@
+<div align="center">
 
-<h1>Mise en place de google sign in</h1>
-#https://indd.adobe.com/view/6a873ae4-95bb-433b-b799-f295d9ffeaa7
+# 🍽️ Dashboard Admin - Gestion de Restaurants
 
+<img src="https://github.com/Mika73100/api/blob/main/public/300shots_so.png" width="600"/>
 
+### 🛠️ Réalisé avec **Next.js**, **Prisma**, **NextAuth** & **Tailwind CSS**
 
-#LANCER LE PROJET
-1. npm i nodemodule     (install les dependances)
-2. npm run dev   (lance le projet)
-3. 
-4. 
-5. 
+</div>
 
+---
 
-#POUR PRISMA
-1. npm install prisma -D
-2. npx prisma init
-3. npx prisma migrate dev
+## 🌍 Description du projet
+
+Ce projet est une application web de type dashboard permettant la **gestion d’utilisateurs, de restaurants et de tâches (todos)**.  
+Il inclut un **système d’authentification sécurisé**, une **connexion à une base de données** via Prisma ORM, et une interface moderne et responsive grâce à Tailwind CSS.
+
+---
+
+## 📸 Aperçus
+
+### 🔐 Authentification
+
+**Email :** `Test@Test.Fr`  
+**Mot de passe :** `Testdu73`
+
+<img src="https://github.com/Mika73100/api/blob/main/public/638shots_so.png" width="600"/>
+
+### 🧑‍🍳 Gestion des Restaurants
+
+<img src="https://github.com/Mika73100/api/blob/main/public/localhost_5173_%20(2).png" width="600"/>
+
+### 🗂️ Base de données (Prisma Studio)
+
+<img src="https://github.com/Mika73100/api/blob/main/public/bdd.png" width="600"/>
+
+---
+
+## 🚀 Fonctionnalités
+
+- 🔐 Authentification avec **NextAuth**
+- 🧠 ORM avec **Prisma** + SQLite
+- 📄 Visualisation en live de la base avec **Prisma Studio**
+- 🧾 CRUD complet sur les restaurants
+- ✅ Gestion des tâches (TODOs)
+- 🧑‍🤝‍🧑 Gestion des utilisateurs
+- 🎨 UI moderne avec **Tailwind CSS**
+
+---
+
+## 🌐 Routes disponibles
+
+| Méthode | URL                                         | Description                    |
+|--------:|---------------------------------------------|--------------------------------|
+| POST    | `/auth/signin`                              | Connexion                      |
+| POST    | `/auth/signout`                             | Déconnexion                    |
+| GET     | `/api/auth/session`                         | Authentification session       |
+| GET     | `/api/restaurants`                          | Récupération des restaurants   |
+
+---
+
+## ⚙️ Installation
+
+### 🧱 Cloner le repo
+
+```bash
+git clone https://github.com/Mika73100/api.git
+cd api
+```
+
+### 🔧 Dépendances
+
+```bash
+npm install
+```
+
+### 🚀 Lancer le projet
+
+```bash
+npm run dev
+```
+
+---
+
+## 🧠 Configuration Prisma
+
+```bash
+npm install prisma --save-dev
+npx prisma init --datasource-provider sqlite
+```
+
+> ⚠️ N'oublie pas de configurer ta base dans `.env`
+
+### Créer la BDD & lancer Prisma Studio
+
+```bash
+npx prisma migrate dev --name init
+npx prisma studio
+```
+
+---
+
+## 🔐 Authentification avec NextAuth
+
+```bash
+npm install next-auth
+```
+
+## 🔒 Sécurité
+
+```bash
+npm install bcrypt @types/bcrypt
+```
+
+---
+
+## 🙌 Remerciements
+
+Merci pour votre visite ! Ce projet est un exercice personnel dans le cadre de mon apprentissage du développement web fullstack.
+
+N’hésitez pas à me faire un retour, forker le projet ou y contribuer !
+
+<div align="center">
+
+⭐ *Un petit like sur le repo fait toujours plaisir !* ⭐
+
+</div>
