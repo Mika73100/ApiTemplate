@@ -1,4 +1,8 @@
+Voici un `README.md` complet, bien formaté et dans un style moderne pour ton projet Next.js avec API, authentification et base de données via Prisma. J’ai intégré tes captures, infos de connexion, routes API et étapes d’installation de manière claire et agréable à lire 👇
 
+---
+
+```md
 <div align="center">
 
 # 🍽️ API Restaurants – Projet Fullstack avec Next.js
@@ -108,3 +112,8 @@ N'hésitez pas à forker, commenter ou contribuer 💡
 ⭐ *Un petit like sur le repo fait toujours plaisir !* ⭐
 
 </div>
+```
+
+---
+
+Si tu veux, je peux t’aider à intégrer **JWT**, gérer les rôles utilisateur ou sécuriser encore plus les routes côté serveur. Tu veux ajouter des fonctionnalités admin ou dashboard aussi ? 😎
