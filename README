@@ -1,119 +1,76 @@
-Voici un `README.md` complet, bien formaté et dans un style moderne pour ton projet Next.js avec API, authentification et base de données via Prisma. J’ai intégré tes captures, infos de connexion, routes API et étapes d’installation de manière claire et agréable à lire 👇
-
----
-
-```md
 <div align="center">
-
-# 🍽️ API Restaurants – Projet Fullstack avec Next.js
-
-<img src="https://github.com/Mika73100/api/blob/main/public/300shots_so.png" alt="preview" width="600"/>
-
+  <h2>📱 # 🎵 Jukebox – Application de Streaming Musical 🎵 # 📱</h2>
+  <img src="518shots_so.png" alt="aperçu de l'application jukebox" width="600"/>
 </div>
 
 ---
 
-## 🌍 Description du projet
+## 🌍 Description
 
-Application web développée avec **Next.js**, intégrant une authentification sécurisée via **NextAuth**, une base de données **SQLite** gérée avec **Prisma**, et une API REST permettant d’accéder à une liste de restaurants.
+**Jukebox** est une application mobile développée avec **Flutter** permettant aux utilisateurs de :
+- 🎶 Écouter des musiques en streaming
+- 🔎 Parcourir une bibliothèque musicale dynamique
+- ❤️ Ajouter leurs titres préférés à une liste de favoris
+- 🔐 Se connecter avec Firebase Auth pour sauvegarder leurs préférences
+- ☁️ Stocker et lire les musiques via Firebase Storage/Firestore
 
-Ce projet met en œuvre :
-- 🔐 Un système d’inscription / connexion
-- 📂 Une base de données SQLite accessible via Prisma
-- 🔁 Des routes API RESTful
-- 🧪 Un environnement de test local complet
-
----
-
-## 👤 Informations de Connexion (Compte de Test)
-
-- **Email** : `Test@Test.Fr`  
-- **Mot de passe** : `Testdu73`
+Le tout dans une interface fluide, moderne et responsive, pour une expérience musicale simple et agréable !
 
 ---
 
-## 🖼️ Screenshots
+## 🚀 Fonctionnalités
 
-<img src="https://github.com/Mika73100/api/blob/main/public/bdd.png" width="600"/>
-<img src="https://github.com/Mika73100/api/blob/main/public/638shots_so.png" width="600"/>
-<img src="https://github.com/Mika73100/api/blob/main/public/get.png" width="600"/>
-
----
-
-## 🌐 Routes API disponibles
-
-| Route                    | Méthode | Description                                |
-|-------------------------|---------|--------------------------------------------|
-| `/auth/signin`          | POST    | Connexion utilisateur                      |
-| `/auth/signout`         | POST    | Déconnexion utilisateur                    |
-| `/api/auth/session`     | GET     | Vérification de session active             |
-| `/api/restaurants`      | GET     | Récupération des données des restaurants   |
+- 📂 Base de données cloud via Firebase Firestore
+- 🔥 Authentification sécurisée (email, mot de passe)
+- 🎧 Lecture audio avec Flutter & packages audio
+- 🧠 Gestion des états (favoris, utilisateur connecté)
+- 💾 Synchronisation temps réel avec Firebase
+- 🎨 UI responsive, animations fluides et cross-platform (Android/iOS)
 
 ---
 
-## ⚙️ Démarrer le projet
+## 🧰 Technologies utilisées
 
-### 1. Création de l'app Next.js
-
-```bash
-npx create-next-app@latest
-# Appuyer sur Entrée à chaque étape
-```
-
-### 2. Lancer le serveur local
-
-```bash
-npm run dev
-```
+<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
+<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />
 
 ---
 
-## 🧱 Configuration de la base de données avec Prisma
+## 📦 Installation
 
-### 1. Installer Prisma
-
+1. **Cloner le repo :**
 ```bash
-npm install prisma --save-dev
-npx prisma init --datasource-provider sqlite
+git clone https://github.com/TonPseudo/jukebox-flutter.git
+cd jukebox-flutter
 ```
 
-### 2. Définir ton schéma dans `prisma/schema.prisma`  
-(*Écris ton modèle de base de données*)
-
-### 3. Migrer la base de données
-
+2. **Installer les dépendances :**
 ```bash
-npx prisma migrate dev --name init
+flutter pub get
 ```
 
-### 4. Accéder à Prisma Studio
-
+3. **Lancer l’application :**
 ```bash
-npx prisma studio
+flutter run
 ```
+
+> ⚠️ N'oublie pas de configurer Firebase (google-services.json pour Android, et GoogleService-Info.plist pour iOS)
 
 ---
 
-## 📦 Dépendances à installer
+## 📁 Structure du projet
 
-```bash
-npm install bcrypt @types/bcrypt
-npm install next-auth
-```
+- `/lib/` → Code source Flutter  
+- `/assets/` → Images, sons, etc.  
+- `/firebase/` → Configuration Firebase (Firestore, Auth, Storage)
 
 ---
 
 🙌 Remerciements  
-Merci d’avoir visité ce projet ! Ce projet est un **exercice fullstack** combinant **Next.js, API REST, Prisma et Auth**.  
-N'hésitez pas à forker, commenter ou contribuer 💡
-
-<div align="center">
-
-⭐ *Un petit like sur le repo fait toujours plaisir !* ⭐
-
-</div>
-```
-
+Merci d’avoir jeté un œil à ce projet musical !  
+Jukebox a été développé pour apprendre à manipuler **Flutter + Firebase** dans un contexte réel et fun.  
+N’hésite pas à l’installer, tester, forker ou contribuer 🎧💛
 ---
 
 Si tu veux, je peux t’aider à intégrer **JWT**, gérer les rôles utilisateur ou sécuriser encore plus les routes côté serveur. Tu veux ajouter des fonctionnalités admin ou dashboard aussi ? 😎
