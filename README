@@ -1,83 +1,78 @@
-
----
-
 <div align="center">
 
-# 🍽️ Dashboard Admin - Gestion de Restaurants
+# 🚀 Dashboard Admin - Next.js App
 
 <img src="https://github.com/Mika73100/api/blob/main/public/300shots_so.png" width="600"/>
 
-### 🛠️ Réalisé avec **Next.js**, **Prisma**, **NextAuth** & **Tailwind CSS**
+### 🔧 Réalisé avec **Next.js**, **Prisma**, **NextAuth**, **Tailwind CSS**
 
 </div>
 
 ---
 
-## 🌍 Description du projet
+## 📌 Description
 
-Ce projet est une application web de type dashboard permettant la **gestion d’utilisateurs, de restaurants et de tâches (todos)**.  
-Il inclut un **système d’authentification sécurisé**, une **connexion à une base de données** via Prisma ORM, et une interface moderne et responsive grâce à Tailwind CSS.
+Ce projet est un **dashboard de gestion** permettant d’administrer des **utilisateurs**, des **restaurants** et des **tâches (todos)**.  
+Il propose une **interface moderne** et une **connexion sécurisée**, avec une API complète en CRUD et une base de données gérée par Prisma.
 
 ---
 
-## 📸 Aperçus
+## 📷 Aperçus
 
-### 🔐 Authentification
+### 👤 Connexion
 
 **Email :** `Test@Test.Fr`  
 **Mot de passe :** `Testdu73`
 
 <img src="https://github.com/Mika73100/api/blob/main/public/638shots_so.png" width="600"/>
 
-### 🧑‍🍳 Gestion des Restaurants
+### 🍽️ Liste des restaurants
 
 <img src="https://github.com/Mika73100/api/blob/main/public/localhost_5173_%20(2).png" width="600"/>
 
-### 🗂️ Base de données (Prisma Studio)
+### 🧾 Base de données (Prisma)
 
 <img src="https://github.com/Mika73100/api/blob/main/public/bdd.png" width="600"/>
 
 ---
 
-## 🚀 Fonctionnalités
+## ✅ Fonctionnalités
 
-- 🔐 Authentification avec **NextAuth**
-- 🧠 ORM avec **Prisma** + SQLite
-- 📄 Visualisation en live de la base avec **Prisma Studio**
-- 🧾 CRUD complet sur les restaurants
-- ✅ Gestion des tâches (TODOs)
-- 🧑‍🤝‍🧑 Gestion des utilisateurs
-- 🎨 UI moderne avec **Tailwind CSS**
+- 🔐 Connexion sécurisée via **NextAuth**
+- 🔄 Gestion CRUD complète (utilisateurs, restaurants, todos)
+- 🧠 ORM moderne avec **Prisma + SQLite**
+- 🧭 Navigation claire avec **Sidebar**
+- 💅 Interface responsive avec **Tailwind CSS**
 
 ---
 
-## 🌐 Routes disponibles
+## 🌐 API - Endpoints disponibles
 
-| Méthode | URL                                         | Description                    |
-|--------:|---------------------------------------------|--------------------------------|
-| POST    | `/auth/signin`                              | Connexion                      |
-| POST    | `/auth/signout`                             | Déconnexion                    |
-| GET     | `/api/auth/session`                         | Authentification session       |
-| GET     | `/api/restaurants`                          | Récupération des restaurants   |
+| Méthode | Endpoint                           | Description                      |
+|--------:|------------------------------------|----------------------------------|
+| `POST`  | `/auth/signin`                     | Connexion                        |
+| `POST`  | `/auth/signout`                    | Déconnexion                      |
+| `GET`   | `/api/auth/session`                | Vérification de session          |
+| `GET`   | `/api/restaurants`                 | Liste des restaurants            |
 
 ---
 
 ## ⚙️ Installation
 
-### 🧱 Cloner le repo
+### 1. Cloner le projet
 
 ```bash
 git clone https://github.com/Mika73100/api.git
 cd api
 ```
 
-### 🔧 Dépendances
+### 2. Installer les dépendances
 
 ```bash
 npm install
 ```
 
-### 🚀 Lancer le projet
+### 3. Lancer le serveur
 
 ```bash
 npm run dev
@@ -85,16 +80,16 @@ npm run dev
 
 ---
 
-## 🧠 Configuration Prisma
+## 🛠️ Configuration Prisma
 
 ```bash
 npm install prisma --save-dev
 npx prisma init --datasource-provider sqlite
 ```
 
-> ⚠️ N'oublie pas de configurer ta base dans `.env`
+> Remplir le fichier `.env` avec l'URL de la base
 
-### Créer la BDD & lancer Prisma Studio
+### Créer & voir la base
 
 ```bash
 npx prisma migrate dev --name init
@@ -103,13 +98,13 @@ npx prisma studio
 
 ---
 
-## 🔐 Authentification avec NextAuth
+## 🔐 Authentification
 
 ```bash
 npm install next-auth
 ```
 
-## 🔒 Sécurité
+## 🔒 Sécurité des mots de passe
 
 ```bash
 npm install bcrypt @types/bcrypt
@@ -117,15 +112,16 @@ npm install bcrypt @types/bcrypt
 
 ---
 
-## 🙌 Remerciements
+## ❤️ Remerciements
 
-Merci pour votre visite ! Ce projet est un exercice personnel dans le cadre de mon apprentissage du développement web fullstack.
+Merci d’avoir consulté ce projet !  
+Ce dashboard est un **projet d'apprentissage personnel** mêlant **frontend & backend**.
 
-N’hésitez pas à me faire un retour, forker le projet ou y contribuer !
+> N’hésitez pas à laisser un ⭐, faire un fork, ou proposer des contributions !
 
-<div align="center">
+---
 
-⭐ *Un petit like sur le repo fait toujours plaisir !* ⭐
+Tu veux que je te l’envoie en `.md` directement ou que je l’adapte encore à un autre format ?
 
 </div>
 
