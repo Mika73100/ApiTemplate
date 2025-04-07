@@ -1,78 +1,62 @@
+
 <div align="center">
 
-# 🚀 Dashboard Admin - Next.js App
+# 🍽️ API Restaurants – Projet Fullstack avec Next.js
 
-<img src="https://github.com/Mika73100/api/blob/main/public/300shots_so.png" width="600"/>
-
-### 🔧 Réalisé avec **Next.js**, **Prisma**, **NextAuth**, **Tailwind CSS**
+<img src="https://github.com/Mika73100/api/blob/main/public/300shots_so.png" alt="preview" width="600"/>
 
 </div>
 
 ---
 
-## 📌 Description
+## 🌍 Description du projet
 
-Ce projet est un **dashboard de gestion** permettant d’administrer des **utilisateurs**, des **restaurants** et des **tâches (todos)**.  
-Il propose une **interface moderne** et une **connexion sécurisée**, avec une API complète en CRUD et une base de données gérée par Prisma.
+Application web développée avec **Next.js**, intégrant une authentification sécurisée via **NextAuth**, une base de données **SQLite** gérée avec **Prisma**, et une API REST permettant d’accéder à une liste de restaurants.
+
+Ce projet met en œuvre :
+- 🔐 Un système d’inscription / connexion
+- 📂 Une base de données SQLite accessible via Prisma
+- 🔁 Des routes API RESTful
+- 🧪 Un environnement de test local complet
 
 ---
 
-## 📷 Aperçus
+## 👤 Informations de Connexion (Compte de Test)
 
-### 👤 Connexion
+- **Email** : `Test@Test.Fr`  
+- **Mot de passe** : `Testdu73`
 
-**Email :** `Test@Test.Fr`  
-**Mot de passe :** `Testdu73`
+---
 
-<img src="https://github.com/Mika73100/api/blob/main/public/638shots_so.png" width="600"/>
-
-### 🍽️ Liste des restaurants
-
-<img src="https://github.com/Mika73100/api/blob/main/public/localhost_5173_%20(2).png" width="600"/>
-
-### 🧾 Base de données (Prisma)
+## 🖼️ Screenshots
 
 <img src="https://github.com/Mika73100/api/blob/main/public/bdd.png" width="600"/>
+<img src="https://github.com/Mika73100/api/blob/main/public/638shots_so.png" width="600"/>
+<img src="https://github.com/Mika73100/api/blob/main/public/get.png" width="600"/>
 
 ---
 
-## ✅ Fonctionnalités
+## 🌐 Routes API disponibles
 
-- 🔐 Connexion sécurisée via **NextAuth**
-- 🔄 Gestion CRUD complète (utilisateurs, restaurants, todos)
-- 🧠 ORM moderne avec **Prisma + SQLite**
-- 🧭 Navigation claire avec **Sidebar**
-- 💅 Interface responsive avec **Tailwind CSS**
-
----
-
-## 🌐 API - Endpoints disponibles
-
-| Méthode | Endpoint                           | Description                      |
-|--------:|------------------------------------|----------------------------------|
-| `POST`  | `/auth/signin`                     | Connexion                        |
-| `POST`  | `/auth/signout`                    | Déconnexion                      |
-| `GET`   | `/api/auth/session`                | Vérification de session          |
-| `GET`   | `/api/restaurants`                 | Liste des restaurants            |
+| Route                    | Méthode | Description                                |
+|-------------------------|---------|--------------------------------------------|
+| `/auth/signin`          | POST    | Connexion utilisateur                      |
+| `/auth/signout`         | POST    | Déconnexion utilisateur                    |
+| `/api/auth/session`     | GET     | Vérification de session active             |
+| `/api/restaurants`      | GET     | Récupération des données des restaurants   |
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Démarrer le projet
 
-### 1. Cloner le projet
+### 1. Création de l'app Next.js
 
 ```bash
-git clone https://github.com/Mika73100/api.git
-cd api
+npx create-next-app@latest
+# Appuyer sur Entrée à chaque étape
 ```
 
-### 2. Installer les dépendances
-
-```bash
-npm install
-```
-
-### 3. Lancer le serveur
+### 2. Lancer le serveur local
 
 ```bash
 npm run dev
@@ -80,49 +64,47 @@ npm run dev
 
 ---
 
-## 🛠️ Configuration Prisma
+## 🧱 Configuration de la base de données avec Prisma
+
+### 1. Installer Prisma
 
 ```bash
 npm install prisma --save-dev
 npx prisma init --datasource-provider sqlite
 ```
 
-> Remplir le fichier `.env` avec l'URL de la base
+### 2. Définir ton schéma dans `prisma/schema.prisma`  
+(*Écris ton modèle de base de données*)
 
-### Créer & voir la base
+### 3. Migrer la base de données
 
 ```bash
 npx prisma migrate dev --name init
+```
+
+### 4. Accéder à Prisma Studio
+
+```bash
 npx prisma studio
 ```
 
 ---
 
-## 🔐 Authentification
-
-```bash
-npm install next-auth
-```
-
-## 🔒 Sécurité des mots de passe
+## 📦 Dépendances à installer
 
 ```bash
 npm install bcrypt @types/bcrypt
+npm install next-auth
 ```
 
 ---
 
-## ❤️ Remerciements
+🙌 Remerciements  
+Merci d’avoir visité ce projet ! Ce projet est un **exercice fullstack** combinant **Next.js, API REST, Prisma et Auth**.  
+N'hésitez pas à forker, commenter ou contribuer 💡
 
-Merci d’avoir consulté ce projet !  
-Ce dashboard est un **projet d'apprentissage personnel** mêlant **frontend & backend**.
+<div align="center">
 
-> N’hésitez pas à laisser un ⭐, faire un fork, ou proposer des contributions !
-
----
-
-Tu veux que je te l’envoie en `.md` directement ou que je l’adapte encore à un autre format ?
+⭐ *Un petit like sur le repo fait toujours plaisir !* ⭐
 
 </div>
-
----
